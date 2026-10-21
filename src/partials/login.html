@@ -1,0 +1,25 @@
+<div class="login hidden" id="loginScreen" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="login-card panel">
+    <div class="brand login-brand">
+      <div class="brand-mark"><span></span><i></i></div>
+      <div><strong>Aureon</strong><small>HOME FINANCE</small></div>
+    </div>
+
+    <div class="avatar avatar-xl login-avatar" id="loginAvatar" aria-hidden="true"></div>
+
+    <div>
+      <div class="eyebrow">BEM-VINDO</div>
+      <h1 id="loginTitle">Como podemos te chamar?</h1>
+    </div>
+    <p class="login-greeting" id="loginGreeting"></p>
+
+    <form id="loginForm" class="stack-form" autocomplete="off">
+      <label>Seu nome
+        <input id="loginName" name="nome" required maxlength="40" autocomplete="given-name" placeholder="Ex.: Maria">
+      </label>
+      <button class="apply-btn full-btn" type="submit">Entrar ↗</button>
+    </form>
+
+    <small class="login-note">Seu nome fica salvo só neste navegador. Não existe conta online nem senha.</small>
+  </div>
+</div>

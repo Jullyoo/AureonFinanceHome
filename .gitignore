@@ -1,0 +1,29 @@
+# ---------------------------------------------------------------------------
+# SUAS FINANÇAS NUNCA DEVEM IR PARA O GITHUB.
+# Qualquer planilha ou backup seu fica de fora do repositório. A única
+# exceção é a planilha modelo (dados fictícios) em assets/.
+# ---------------------------------------------------------------------------
+*.xlsx
+*.xls
+*.xlsm
+*.csv
+Aureon_Backup_*.json
+!assets/Aureon_Home_Finance_Modelo.xlsx
+
+# Dependências e saídas de build
+node_modules/
+dist/
+.vercel/
+
+# Sistema e editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Logs e variáveis de ambiente
+*.log
+npm-debug.log*
+.env
+.env.*

@@ -1,0 +1,211 @@
+@media (max-width: 1250px) {
+  .sidebar {
+    width: 205px;
+  }
+  .main {
+    padding: 24px;
+  }
+  .hero-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .balance-card {
+    grid-row: span 1;
+  }
+  .charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 70px;
+    padding: 22px 9px;
+  }
+  .brand {
+    padding: 0 9px 30px;
+  }
+  .brand > div:last-child,
+  .profile-mini > div:not(.avatar),
+  .profile-mini .dot,
+  .nav-item:not(.active) {
+    font-size: 0;
+  }
+  .profile-mini {
+    padding: 7px;
+    justify-content: center;
+  }
+  .nav-item {
+    font-size: 0;
+    justify-content: center;
+    padding: 13px 5px;
+  }
+  .nav-item span {
+    font-size: 20px;
+  }
+  .sidebar-bottom {
+    display: none;
+  }
+  .main {
+    padding: 22px 18px;
+  }
+  .charts-grid,
+  .bottom-grid,
+  .investment-layout {
+    grid-template-columns: 1fr;
+  }
+  .filterbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .filters {
+    flex-wrap: wrap;
+  }
+  .goals-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 18px 12px;
+  }
+  .topbar {
+    align-items: flex-start;
+  }
+  .topbar h1 {
+    font-size: 23px;
+  }
+  .top-actions {
+    gap: 6px;
+  }
+  .upload-btn {
+    padding: 10px;
+    font-size: 0;
+  }
+  .upload-btn span {
+    display: none;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+  .balance-card {
+    grid-column: span 2;
+  }
+  .stat-card {
+    padding: 14px 12px;
+  }
+  .stat-card > strong {
+    font-size: 18px;
+  }
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .section-heading h2 {
+    font-size: 20px;
+  }
+  .filters {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .filters label {
+    min-width: 0;
+  }
+  .filters input,
+  .filters select {
+    width: 100%;
+    min-width: 0;
+  }
+  .filters .apply-btn {
+    grid-column: span 2;
+  }
+  .charts-grid {
+    gap: 10px;
+  }
+  .chart-panel,
+  .recent-panel,
+  .goal-preview {
+    padding: 16px;
+  }
+  .chart-area {
+    height: 210px;
+  }
+  .goals-grid {
+    grid-template-columns: 1fr;
+  }
+  .goal-summary,
+  .investment-kpis {
+    grid-template-columns: 1fr;
+  }
+  .table-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .table-actions input {
+    flex: 1;
+    min-width: 130px;
+  }
+  .table-actions select {
+    flex: 1;
+  }
+  footer {
+    flex-direction: column;
+  }
+  .filter-title {
+    font-size: 11px;
+  }
+  .topbar .subhead {
+    max-width: 240px;
+  }
+  .sidebar {
+    width: 55px;
+    padding: 18px 5px;
+  }
+  .brand {
+    padding-left: 7px;
+  }
+  .brand-mark {
+    transform: scale(0.65);
+    margin-left: -3px;
+  }
+  .profile-mini {
+    padding: 5px;
+  }
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+  .nav-item {
+    padding: 12px 0;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .investment-kpis .panel {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-identity {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .row-actions,
+  .goal-actions {
+    opacity: 1;
+  }
+}

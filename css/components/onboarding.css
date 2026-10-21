@@ -1,0 +1,56 @@
+.onboarding {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-4);
+  padding: var(--space-6);
+}
+
+.onboarding-icon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--green-border);
+  border-radius: var(--radius-md);
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 24px;
+}
+
+.onboarding-copy h2 {
+  margin: 4px 0 10px;
+  font: 700 20px var(--font-display);
+  letter-spacing: -0.5px;
+}
+
+.onboarding-steps {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.onboarding-steps b {
+  color: var(--text);
+}
+
+.onboarding-actions {
+  display: grid;
+  gap: var(--space-2);
+}
+
+a.apply-btn,
+a.text-btn {
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .onboarding {
+    grid-template-columns: 1fr;
+  }
+}

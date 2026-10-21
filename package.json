@@ -1,0 +1,23 @@
+{
+  "name": "aureon-home-finance",
+  "version": "4.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Dashboard de finanças pessoais em HTML, CSS e JavaScript puro. Importe sua planilha Excel; os dados ficam no navegador.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "build:dist": "node build.mjs --dist",
+    "watch": "node build.mjs --watch",
+    "check:build": "node build.mjs --check",
+    "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" \"tests/**/*.mjs\" build.mjs",
+    "lint": "prettier --check \"js/**/*.js\" \"css/**/*.css\" \"tests/**/*.mjs\" build.mjs",
+    "test": "node --test",
+    "check": "npm run lint && npm run test && npm run check:build"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10"
+  }
+}

@@ -1,0 +1,127 @@
+<section class="view active" id="view-overview">
+  <div id="budgetNotice" class="notice notice-warning hidden" role="status"></div>
+
+  <article class="panel onboarding hidden" id="onboarding">
+    <div class="onboarding-icon" aria-hidden="true">↑</div>
+    <div class="onboarding-copy">
+      <div class="eyebrow">COMECE POR AQUI</div>
+      <h2>Importe sua planilha para ver seu painel</h2>
+      <ol class="onboarding-steps">
+        <li>Baixe a planilha modelo.</li>
+        <li>Preencha as abas <b>Transacoes</b>, <b>Metas</b> e <b>Investimentos</b>.</li>
+        <li>Clique em <b>Importar Excel</b>. O arquivo é lido no seu navegador e nada é enviado a servidor.</li>
+      </ol>
+    </div>
+    <div class="onboarding-actions">
+      <button class="apply-btn" type="button" data-data-action="pick-excel">↑ Importar Excel</button>
+      <a class="apply-btn apply-btn-ghost" href="assets/Aureon_Home_Finance_Modelo.xlsx" download>Baixar planilha modelo</a>
+    </div>
+  </article>
+
+  <div class="hero-grid">
+    <article class="balance-card panel">
+      <div class="card-top"><span>Saldo do período</span><span class="pill pill-green">● Visão consolidada</span></div>
+      <div class="balance-value" id="balanceValue" data-money>R$ 0,00</div>
+      <div class="balance-foot"><span id="balanceCaption">Entradas menos saídas</span><span class="sparkline" aria-hidden="true">⌁ ⌁ ⌁</span></div>
+      <div class="balance-glow"></div>
+      <div class="orb orb-one"></div>
+      <div class="orb orb-two"></div>
+    </article>
+
+    <article class="stat-card panel">
+      <div class="stat-head"><span>Entradas</span><span class="stat-icon income" aria-hidden="true">↙</span></div>
+      <strong id="incomeValue" data-money>R$ 0,00</strong>
+      <small><i class="positive">↗</i> Dinheiro que chegou</small>
+      <div class="mini-bars" id="incomeBars" aria-hidden="true"></div>
+    </article>
+
+    <article class="stat-card panel">
+      <div class="stat-head"><span>Saídas</span><span class="stat-icon expense" aria-hidden="true">↗</span></div>
+      <strong id="expenseValue" data-money>R$ 0,00</strong>
+      <small><i class="negative">↗</i> Dinheiro que saiu</small>
+      <div class="mini-bars warm" id="expenseBars" aria-hidden="true"></div>
+    </article>
+
+    <article class="stat-card panel savings-card">
+      <div class="stat-head"><span>Taxa de economia</span><span class="stat-icon savings" aria-hidden="true">✳</span></div>
+      <strong id="savingsValue">0%</strong>
+      <small id="savingsCaption">Quanto da entrada ficou com você</small>
+      <div class="progress-track"><div id="savingsProgress" class="progress-fill"></div></div>
+    </article>
+  </div>
+
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">INTELIGÊNCIA FINANCEIRA</div>
+      <h2>Seu dinheiro em perspectiva</h2>
+    </div>
+    <span class="live-label"><i></i> Atualizado localmente</span>
+  </div>
+
+  <div class="charts-grid">
+    <article class="panel chart-panel large-chart">
+      <div class="panel-heading">
+        <div><h3>Fluxo financeiro</h3><p>Entradas e saídas ao longo do período</p></div>
+        <span class="chart-badge">R$ BRL</span>
+      </div>
+      <div class="chart-area"><canvas id="flowChart" aria-label="Gráfico de entradas e saídas"></canvas></div>
+    </article>
+
+    <article class="panel chart-panel">
+      <div class="panel-heading">
+        <div><h3>Onde você gastou</h3><p>Distribuição por categoria</p></div>
+        <span class="more" aria-hidden="true">···</span>
+      </div>
+      <div class="donut-wrap">
+        <canvas id="categoryChart" aria-label="Gastos por categoria"></canvas>
+        <div class="donut-center"><small>total de</small><b id="donutTotal" data-money>R$ 0</b><small>em saídas</small></div>
+      </div>
+      <div id="categoryLegend" class="category-legend"></div>
+    </article>
+  </div>
+
+  <div class="bottom-grid">
+    <article class="panel recent-panel">
+      <div class="panel-heading">
+        <div><h3>Movimentações recentes</h3><p>Seus últimos registros</p></div>
+        <button class="text-btn" type="button" data-goto="transactions">Ver todas ↗</button>
+      </div>
+      <div id="recentTransactions"></div>
+    </article>
+
+    <article class="panel goal-preview">
+      <div class="panel-heading">
+        <div><h3>Metas que inspiram</h3><p>Pequenos passos, grandes conquistas</p></div>
+        <button class="text-btn" type="button" data-goto="goals">Ver metas ↗</button>
+      </div>
+      <div id="goalPreview"></div>
+    </article>
+  </div>
+
+  <template id="tpl-recent-row">
+    <div class="recent-row">
+      <div class="tx-icon" data-slot="icon"></div>
+      <div>
+        <div class="tx-name" data-slot="name"></div>
+        <div class="tx-meta" data-slot="meta"></div>
+      </div>
+      <div class="tx-value" data-slot="value" data-money></div>
+    </div>
+  </template>
+
+  <template id="tpl-legend-row">
+    <div class="legend-row">
+      <span class="legend-dot" data-slot="dot"></span>
+      <span data-slot="name"></span>
+      <strong data-slot="value" data-money></strong>
+    </div>
+  </template>
+
+  <template id="tpl-goal-mini">
+    <div class="goal-mini">
+      <div class="goal-mini-top"><b data-slot="name"></b><span data-slot="percent"></span></div>
+      <div class="goal-line"><span data-slot="bar"></span></div>
+      <small data-slot="amounts" data-money></small>
+    </div>
+  </template>
+</section>

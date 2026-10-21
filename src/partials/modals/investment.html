@@ -1,0 +1,43 @@
+<div class="modal-backdrop hidden" id="investmentModal" role="dialog" aria-modal="true" aria-labelledby="investmentModalTitle">
+  <div class="modal panel">
+    <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+    <div class="eyebrow" id="investmentModalEyebrow">NOVO ATIVO</div>
+    <h2 id="investmentModalTitle">Novo investimento</h2>
+    <p>Cadastre um ativo para acompanhar a projeção.</p>
+
+    <form id="investmentForm" class="stack-form">
+      <input type="hidden" name="id">
+      <label>Nome do ativo
+        <input name="ativo" required maxlength="60" placeholder="Ex.: CDB Banco X 110% CDI">
+      </label>
+      <div class="form-row">
+        <label>Instituição
+          <input name="instituicao" maxlength="40" placeholder="Ex.: Banco X">
+        </label>
+        <label>Tipo
+          <input name="tipo" maxlength="30" placeholder="CDB, LCI, Tesouro...">
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Valor investido (R$)
+          <input name="valor" type="number" min="0" step=".01" required>
+        </label>
+        <label>% do CDI contratado
+          <input name="pct" type="number" min="0.01" step=".01" value="100" required>
+        </label>
+      </div>
+      <div class="form-row">
+        <label>CDI anual (%)
+          <input name="cdi" type="number" min="0.01" step=".01" required>
+        </label>
+        <label>Vencimento
+          <input name="vencimento" type="date">
+        </label>
+      </div>
+      <label>Liquidez
+        <input name="liquidez" maxlength="40" placeholder="Ex.: Diária">
+      </label>
+      <button class="apply-btn full-btn" type="submit">Salvar investimento ↗</button>
+    </form>
+  </div>
+</div>

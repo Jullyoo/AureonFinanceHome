@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aureon — Home Finance</title>
+  <meta name="description"
+    content="Dashboard de finanças pessoais: importe sua planilha Excel e acompanhe transações, metas e investimentos. Seus dados ficam só no seu navegador.">
+  <meta name="theme-color" content="#091310">
+  <meta property="og:title" content="Aureon — Home Finance">
+  <meta property="og:description"
+    content="Dashboard de finanças pessoais que roda 100% no navegador. Importe sua planilha Excel e pronto.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+
+
+  <link rel="stylesheet" href="css/layout/shell.css">
+  <link rel="stylesheet" href="css/layout/sidebar.css">
+  <link rel="stylesheet" href="css/layout/filterbar.css">
+
+
+  <link rel="stylesheet" href="css/components/avatar.css">
+  <link rel="stylesheet" href="css/components/buttons.css">
+  <link rel="stylesheet" href="css/components/panel.css">
+  <link rel="stylesheet" href="css/components/progress.css">
+  <link rel="stylesheet" href="css/components/forms.css">
+  <link rel="stylesheet" href="css/components/modal.css">
+  <link rel="stylesheet" href="css/components/toast.css">
+  <link rel="stylesheet" href="css/components/row-actions.css">
+  <link rel="stylesheet" href="css/components/login.css">
+  <link rel="stylesheet" href="css/components/onboarding.css">
+
+
+  <link rel="stylesheet" href="css/views/overview.css">
+  <link rel="stylesheet" href="css/views/transactions.css">
+  <link rel="stylesheet" href="css/views/goals.css">
+  <link rel="stylesheet" href="css/views/investments.css">
+  <link rel="stylesheet" href="css/views/profile.css">
+
+
+  <link rel="stylesheet" href="css/interactions.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="vendor/chart.umd.js"></script>
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><span></span><i></i></div>
+        <div><strong>Aureon</strong><small>HOME FINANCE</small></div>
+      </div>
+
+      <a class="profile-mini" href="#profile" aria-label="Abrir perfil">
+        <div class="avatar" id="sidebarAvatar"></div>
+        <div><b id="sidebarName"></b><small>Finanças pessoais</small></div>
+        <span class="dot"></span>
+      </a>
+
+      <nav aria-label="Seções do painel">
+        <button class="nav-item active" type="button" data-view="overview"><span aria-hidden="true">◈</span> Visão
+          geral</button>
+        <button class="nav-item" type="button" data-view="transactions"><span aria-hidden="true">⇄</span>
+          Transações</button>
+        <button class="nav-item" type="button" data-view="goals"><span aria-hidden="true">◎</span> Minhas metas</button>
+        <button class="nav-item" type="button" data-view="investments"><span aria-hidden="true">↗</span>
+          Investimentos</button>
+        <button class="nav-item" type="button" data-view="profile"><span aria-hidden="true">☺</span> Perfil</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="leaf">✳</div>
+        <p>Um futuro mais leve começa com clareza.</p>
+        <small>SEU DINHEIRO, SUAS ESCOLHAS.</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">SEU PAINEL FINANCEIRO</div>
+          <h1 id="pageTitle"><span id="pageTitleText"></span> <span class="wave" id="pageWave">✦</span></h1>
+          <p class="subhead">Uma visão tranquila e inteligente do seu dinheiro.</p>
+        </div>
+
+        <div class="top-actions">
+          <label class="upload-btn" for="excelFile">↑ <span>Importar Excel</span></label>
+          <input id="excelFile" type="file" accept=".xlsx,.xls,.csv" hidden>
+          <button id="privacyToggle" class="icon-btn" type="button" title="Ocultar valores" aria-label="Ocultar valores"
+            aria-pressed="false">◉</button>
+          <button id="exportExcel" class="icon-btn" type="button" title="Exportar dados para Excel"
+            aria-label="Exportar dados para Excel" data-data-action="export-excel">⇩</button>
+          <a class="avatar top-avatar" id="topAvatar" href="#profile" aria-label="Abrir perfil"></a>
+        </div>
+      </header>
+      <section class="filterbar" aria-label="Filtro de período">
+        <div class="filter-title"><span class="filter-icon" aria-hidden="true">☷</span><b>Explorar período</b></div>
+
+        <div class="filters">
+          <label>Visão
+            <select id="periodMode">
+              <option value="month">Mês</option>
+              <option value="year">Ano</option>
+              <option value="all">Todo período</option>
+              <option value="custom">Data específica</option>
+            </select>
+          </label>
+          <label id="monthWrap">Mês<input id="monthFilter" type="month"></label>
+          <label id="yearWrap" class="hidden">Ano<select id="yearFilter"></select></label>
+          <label id="dateWrap" class="hidden">Dia<input id="dateFilter" type="date"></label>
+          <button class="apply-btn" id="applyFilters" type="button">Aplicar filtros <span
+              aria-hidden="true">↗</span></button>
+        </div>
+      </section>
+
+      <div id="importNotice" class="notice hidden" role="status">
+        <span id="importNoticeText"></span>
+        <button id="dismissNotice" class="notice-close" type="button" aria-label="Fechar aviso">×</button>
+      </div>
+
+      <section class="view active" id="view-overview">
+        <div id="budgetNotice" class="notice notice-warning hidden" role="status"></div>
+
+        <article class="panel onboarding hidden" id="onboarding">
+          <div class="onboarding-icon" aria-hidden="true">↑</div>
+          <div class="onboarding-copy">
+            <div class="eyebrow">COMECE POR AQUI</div>
+            <h2>Importe sua planilha para ver seu painel</h2>
+            <ol class="onboarding-steps">
+              <li>Baixe a planilha modelo.</li>
+              <li>Preencha as abas <b>Transacoes</b>, <b>Metas</b> e <b>Investimentos</b>.</li>
+              <li>Clique em <b>Importar Excel</b>. O arquivo é lido no seu navegador e nada é enviado a servidor.</li>
+            </ol>
+          </div>
+          <div class="onboarding-actions">
+            <button class="apply-btn" type="button" data-data-action="pick-excel">↑ Importar Excel</button>
+            <a class="apply-btn apply-btn-ghost" href="assets/Aureon_Home_Finance_Modelo.xlsx" download>Baixar planilha
+              modelo</a>
+          </div>
+        </article>
+
+        <div class="hero-grid">
+          <article class="balance-card panel">
+            <div class="card-top"><span>Saldo do período</span><span class="pill pill-green">● Visão consolidada</span>
+            </div>
+            <div class="balance-value" id="balanceValue" data-money>R$ 0,00</div>
+            <div class="balance-foot"><span id="balanceCaption">Entradas menos saídas</span><span class="sparkline"
+                aria-hidden="true">⌁ ⌁ ⌁</span></div>
+            <div class="balance-glow"></div>
+            <div class="orb orb-one"></div>
+            <div class="orb orb-two"></div>
+          </article>
+
+          <article class="stat-card panel">
+            <div class="stat-head"><span>Entradas</span><span class="stat-icon income" aria-hidden="true">↙</span></div>
+            <strong id="incomeValue" data-money>R$ 0,00</strong>
+            <small><i class="positive">↗</i> Dinheiro que chegou</small>
+            <div class="mini-bars" id="incomeBars" aria-hidden="true"></div>
+          </article>
+
+          <article class="stat-card panel">
+            <div class="stat-head"><span>Saídas</span><span class="stat-icon expense" aria-hidden="true">↗</span></div>
+            <strong id="expenseValue" data-money>R$ 0,00</strong>
+            <small><i class="negative">↗</i> Dinheiro que saiu</small>
+            <div class="mini-bars warm" id="expenseBars" aria-hidden="true"></div>
+          </article>
+
+          <article class="stat-card panel savings-card">
+            <div class="stat-head"><span>Taxa de economia</span><span class="stat-icon savings"
+                aria-hidden="true">✳</span></div>
+            <strong id="savingsValue">0%</strong>
+            <small id="savingsCaption">Quanto da entrada ficou com você</small>
+            <div class="progress-track">
+              <div id="savingsProgress" class="progress-fill"></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">INTELIGÊNCIA FINANCEIRA</div>
+            <h2>Seu dinheiro em perspectiva</h2>
+          </div>
+          <span class="live-label"><i></i> Atualizado localmente</span>
+        </div>
+
+        <div class="charts-grid">
+          <article class="panel chart-panel large-chart">
+            <div class="panel-heading">
+              <div>
+                <h3>Fluxo financeiro</h3>
+                <p>Entradas e saídas ao longo do período</p>
+              </div>
+              <span class="chart-badge">R$ BRL</span>
+            </div>
+            <div class="chart-area"><canvas id="flowChart" aria-label="Gráfico de entradas e saídas"></canvas></div>
+          </article>
+
+          <article class="panel chart-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Onde você gastou</h3>
+                <p>Distribuição por categoria</p>
+              </div>
+              <span class="more" aria-hidden="true">···</span>
+            </div>
+            <div class="donut-wrap">
+              <canvas id="categoryChart" aria-label="Gastos por categoria"></canvas>
+              <div class="donut-center"><small>total de</small><b id="donutTotal" data-money>R$ 0</b><small>em
+                  saídas</small></div>
+            </div>
+            <div id="categoryLegend" class="category-legend"></div>
+          </article>
+        </div>
+
+        <div class="bottom-grid">
+          <article class="panel recent-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Movimentações recentes</h3>
+                <p>Seus últimos registros</p>
+              </div>
+              <button class="text-btn" type="button" data-goto="transactions">Ver todas ↗</button>
+            </div>
+            <div id="recentTransactions"></div>
+          </article>
+
+          <article class="panel goal-preview">
+            <div class="panel-heading">
+              <div>
+                <h3>Metas que inspiram</h3>
+                <p>Pequenos passos, grandes conquistas</p>
+              </div>
+              <button class="text-btn" type="button" data-goto="goals">Ver metas ↗</button>
+            </div>
+            <div id="goalPreview"></div>
+          </article>
+        </div>
+
+        <template id="tpl-recent-row">
+          <div class="recent-row">
+            <div class="tx-icon" data-slot="icon"></div>
+            <div>
+              <div class="tx-name" data-slot="name"></div>
+              <div class="tx-meta" data-slot="meta"></div>
+            </div>
+            <div class="tx-value" data-slot="value" data-money></div>
+          </div>
+        </template>
+
+        <template id="tpl-legend-row">
+          <div class="legend-row">
+            <span class="legend-dot" data-slot="dot"></span>
+            <span data-slot="name"></span>
+            <strong data-slot="value" data-money></strong>
+          </div>
+        </template>
+
+        <template id="tpl-goal-mini">
+          <div class="goal-mini">
+            <div class="goal-mini-top"><b data-slot="name"></b><span data-slot="percent"></span></div>
+            <div class="goal-line"><span data-slot="bar"></span></div>
+            <small data-slot="amounts" data-money></small>
+          </div>
+        </template>
+      </section>
+      <section class="view" id="view-transactions">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">MOVIMENTAÇÃO</div>
+            <h2>Transações</h2>
+            <p class="subhead">Tudo o que entrou e saiu, em um só lugar.</p>
+          </div>
+
+          <div class="table-heading-actions">
+            <div class="table-actions">
+              <input id="transactionSearch" type="search" placeholder="⌕  Buscar movimentação..."
+                aria-label="Buscar movimentação">
+              <select id="typeFilter" aria-label="Filtrar por tipo">
+                <option value="all">Todos os tipos</option>
+                <option value="Entrada">Entradas</option>
+                <option value="Saída">Saídas</option>
+              </select>
+            </div>
+            <button class="apply-btn" id="addTransactionBtn" type="button">＋ Nova transação</button>
+          </div>
+        </div>
+
+        <article class="panel table-panel">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th data-sort="descricao"><button class="th-sort" type="button">Descrição</button></th>
+                  <th data-sort="categoria"><button class="th-sort" type="button">Categoria</button></th>
+                  <th data-sort="data"><button class="th-sort" type="button">Data</button></th>
+                  <th data-sort="conta"><button class="th-sort" type="button">Conta / origem</button></th>
+                  <th data-sort="pagamento"><button class="th-sort" type="button">Pagamento</button></th>
+                  <th data-sort="status"><button class="th-sort" type="button">Status</button></th>
+                  <th class="right" data-sort="valor"><button class="th-sort" type="button">Valor</button></th>
+                  <th class="right"><span class="sr-only">Ações</span></th>
+                </tr>
+              </thead>
+              <tbody id="transactionsBody"></tbody>
+            </table>
+          </div>
+          <div id="tableFooter" class="table-footer"></div>
+        </article>
+
+        <p class="helper-note">Dica: mantenha a estrutura das colunas da planilha modelo para importar os dados sem
+          ajustes.</p>
+
+        <template id="tpl-tx-row">
+          <tr>
+            <td><b data-slot="description"></b></td>
+            <td data-slot="category"></td>
+            <td data-slot="date"></td>
+            <td data-slot="account"></td>
+            <td data-slot="payment"></td>
+            <td><span class="status" data-slot="status"></span></td>
+            <td class="right tx-amount" data-slot="value" data-money></td>
+            <td class="right">
+              <div class="row-actions">
+                <button class="row-btn" type="button" data-action="edit" title="Editar"
+                  aria-label="Editar transação">✎</button>
+                <button class="row-btn row-btn-danger" type="button" data-action="delete" title="Excluir"
+                  aria-label="Excluir transação">×</button>
+              </div>
+            </td>
+          </tr>
+        </template>
+      </section>
+      <section class="view" id="view-goals">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">PLANOS &amp; CONQUISTAS</div>
+            <h2>Metas com propósito</h2>
+            <p class="subhead">Transforme vontade em um plano que cabe na sua realidade.</p>
+          </div>
+          <button class="apply-btn" id="addGoalBtn" type="button">＋ Nova meta</button>
+        </div>
+
+        <div id="goalsSummary" class="goal-summary"></div>
+        <div id="goalsGrid" class="goals-grid"></div>
+
+        <template id="tpl-goal-summary">
+          <article class="panel">
+            <span data-slot="label"></span>
+            <strong data-slot="value" data-money></strong>
+          </article>
+        </template>
+
+        <template id="tpl-goal-card">
+          <article class="panel goal-card">
+            <div class="goal-art" data-slot="art">
+              <img data-slot="image" alt="" loading="lazy" referrerpolicy="no-referrer">
+              <span class="emoji" data-slot="emoji"></span>
+            </div>
+
+            <div class="goal-top">
+              <span class="goal-priority" data-slot="priority"></span>
+              <div class="goal-actions">
+                <button class="goal-delete" type="button" data-action="edit" title="Editar meta"
+                  aria-label="Editar meta">✎</button>
+                <button class="goal-delete" type="button" data-action="delete" title="Excluir meta"
+                  aria-label="Excluir meta">×</button>
+              </div>
+            </div>
+
+            <h3 data-slot="name"></h3>
+            <div class="target" data-slot="deadline"></div>
+
+            <div class="goal-numbers">
+              <strong data-slot="current" data-money></strong>
+              <span data-slot="target" data-money></span>
+            </div>
+            <div class="goal-line"><span data-slot="bar"></span></div>
+            <div class="goal-bottom">
+              <span data-slot="percent"></span>
+              <strong data-slot="remaining" data-money></strong>
+            </div>
+            <div class="goal-bottom-actions">
+              <button class="text-btn" type="button" data-action="contribute">＋ Adicionar aporte</button>
+            </div>
+          </article>
+        </template>
+      </section>
+      <section class="view" id="view-investments">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">PATRIMÔNIO</div>
+            <h2>Investimentos</h2>
+            <p class="subhead">Acompanhe o que você constrói hoje e projete possibilidades.</p>
+          </div>
+          <div class="section-heading-actions">
+            <span class="pill pill-green">Estimativas ilustrativas</span>
+            <button class="apply-btn" id="addInvestmentBtn" type="button">＋ Novo investimento</button>
+          </div>
+        </div>
+
+        <div class="investment-kpis">
+          <article class="panel investment-total">
+            <span>Total investido</span>
+            <strong id="investedTotal" data-money>R$ 0,00</strong>
+            <small>Patrimônio cadastrado</small>
+          </article>
+          <article class="panel">
+            <span>Rendimento anual projetado</span>
+            <strong id="annualYield" data-money>R$ 0,00</strong>
+            <small>Estimativa bruta simplificada</small>
+          </article>
+          <article class="panel">
+            <span>Valor em 12 meses</span>
+            <strong id="futureTotal" data-money>R$ 0,00</strong>
+            <small>Sem aportes adicionais</small>
+          </article>
+        </div>
+
+        <div class="investment-layout">
+          <article class="panel chart-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Projeção de crescimento</h3>
+                <p>Simulação composta por ativo</p>
+              </div>
+            </div>
+            <div class="chart-area investment-chart"><canvas id="investmentChart"
+                aria-label="Projeção de crescimento dos investimentos"></canvas></div>
+            <p class="disclaimer">Projeção ilustrativa: usa a taxa CDI informada em cada investimento e a porcentagem
+              contratada do CDI. Não considera IR, IOF, taxas, marcação a mercado ou mudanças futuras da taxa.</p>
+          </article>
+
+          <article class="panel holdings-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Carteira cadastrada</h3>
+                <p>Seus investimentos atuais</p>
+              </div>
+            </div>
+            <div id="holdingsList"></div>
+          </article>
+        </div>
+
+        <template id="tpl-holding">
+          <div class="holding">
+            <div class="holding-icon" aria-hidden="true">↗</div>
+            <div><b data-slot="name"></b><small data-slot="meta"></small></div>
+            <div class="holding-values">
+              <strong data-slot="value" data-money></strong>
+              <div class="row-actions">
+                <button class="row-btn" type="button" data-action="edit" title="Editar"
+                  aria-label="Editar investimento">✎</button>
+                <button class="row-btn row-btn-danger" type="button" data-action="delete" title="Excluir"
+                  aria-label="Excluir investimento">×</button>
+              </div>
+            </div>
+          </div>
+        </template>
+      </section>
+      <section class="view" id="view-profile">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">CONTA &amp; PREFERÊNCIAS</div>
+            <h2>Seu perfil</h2>
+            <p class="subhead">Personalize o painel e cuide dos seus dados.</p>
+          </div>
+        </div>
+
+        <div class="profile-layout">
+          <article class="panel profile-card">
+            <div class="profile-identity">
+              <div class="avatar avatar-xl" id="profileAvatar"></div>
+              <div>
+                <h3 id="profileName"></h3>
+                <p class="subhead">Finanças pessoais · dados salvos neste navegador</p>
+                <div class="profile-photo-actions">
+                  <label class="apply-btn apply-btn-ghost" for="profilePhotoInput">Alterar foto</label>
+                  <input id="profilePhotoInput" type="file" accept="image/*" hidden>
+                  <button class="text-btn text-btn-danger" id="removePhoto" type="button">Remover foto</button>
+                  <button class="text-btn" id="logoutBtn" type="button"
+                    title="Volta para a tela de boas-vindas. Seus dados continuam salvos.">Sair</button>
+                </div>
+              </div>
+            </div>
+
+            <form id="profileForm" class="stack-form">
+              <label>Como devemos te chamar?
+                <input name="nome" required maxlength="40" autocomplete="given-name">
+              </label>
+              <div class="form-row">
+                <label>Meta de economia (% da renda)
+                  <input name="metaEconomia" type="number" min="0" max="100" step="1">
+                </label>
+                <label>Limite mensal de gastos (R$)
+                  <input name="limiteGastos" type="number" min="0" step=".01">
+                  <span class="field-hint">Deixe 0 para desativar o alerta.</span>
+                </label>
+              </div>
+              <label>CDI anual padrão (%)
+                <input name="cdiPadrao" type="number" min="0.01" step=".01">
+                <span class="field-hint">Vem preenchido em novos investimentos.</span>
+              </label>
+              <button class="apply-btn" type="submit">Salvar perfil</button>
+            </form>
+          </article>
+
+          <div class="profile-side">
+            <article class="panel profile-summary">
+              <div class="panel-heading">
+                <div>
+                  <h3>Resumo da conta</h3>
+                  <p id="profileSince">Seus números em um relance</p>
+                </div>
+              </div>
+              <div class="profile-stats" id="profileStats"></div>
+              <div class="storage-meter">
+                <div class="storage-meter-head"><span>Armazenamento do navegador</span><span id="storageText"></span>
+                </div>
+                <div class="progress-track">
+                  <div id="storageBar" class="progress-fill"></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel profile-data">
+              <div class="panel-heading">
+                <div>
+                  <h3>Seus dados</h3>
+                  <p>Tudo fica salvo apenas neste navegador</p>
+                </div>
+              </div>
+              <div class="data-list">
+                <div class="data-row">
+                  <div><b>Importar planilha Excel</b><small>Lê as abas Transacoes, Metas e Investimentos do mesmo
+                      arquivo e substitui os dados atuais.</small></div>
+                  <button class="text-btn" type="button" data-data-action="pick-excel">Importar</button>
+                </div>
+                <div class="data-row">
+                  <div><b>Planilha modelo</b><small>Baixe o arquivo de exemplo com as três abas e os cabeçalhos
+                      aceitos.</small></div>
+                  <a class="text-btn" href="assets/Aureon_Home_Finance_Modelo.xlsx" download>Baixar modelo</a>
+                </div>
+                <div class="data-row">
+                  <div><b>Exportar para Excel</b><small>Gera uma planilha no mesmo formato do modelo.</small></div>
+                  <button class="text-btn" type="button" data-data-action="export-excel">Exportar</button>
+                </div>
+                <div class="data-row">
+                  <div><b>Backup completo (.json)</b><small>Inclui perfil e imagens enviadas do computador.</small>
+                  </div>
+                  <button class="text-btn" type="button" data-data-action="export-backup">Baixar backup</button>
+                </div>
+                <div class="data-row">
+                  <div><b>Restaurar backup</b><small>Carrega um arquivo .json gerado pelo Aureon.</small></div>
+                  <button class="text-btn" type="button" data-data-action="pick-backup">Restaurar</button>
+                  <input id="backupFile" type="file" accept=".json,application/json" hidden>
+                </div>
+                <div class="data-row">
+                  <div><b>Limpar todos os dados</b><small>Apaga transações, metas e investimentos. O perfil é
+                      mantido.</small></div>
+                  <button class="text-btn text-btn-danger" type="button" data-data-action="clear-all">Apagar
+                    tudo</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <template id="tpl-profile-stat">
+          <div class="profile-stat"><span data-slot="label"></span><strong data-slot="value"></strong></div>
+        </template>
+      </section>
+
+      <footer>
+        <span>✳ Aureon Home Finance</span>
+        <span>Feito para cuidar do que importa <b>·</b> Seus dados ficam no seu navegador.</span>
+      </footer>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="goalModal" role="dialog" aria-modal="true" aria-labelledby="goalModalTitle">
+    <div class="modal panel">
+      <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      <div class="eyebrow" id="goalModalEyebrow">NOVA CONQUISTA</div>
+      <h2 id="goalModalTitle">Crie uma meta</h2>
+      <p id="goalModalLead">Um objetivo claro deixa o caminho mais leve.</p>
+
+      <form id="goalForm" class="stack-form">
+        <input type="hidden" name="id">
+        <label>Nome da meta
+          <input name="name" required maxlength="60" placeholder="Ex.: Viagem dos sonhos">
+        </label>
+        <div class="form-row">
+          <label>Valor atual (R$)
+            <input name="current" type="number" min="0" step=".01" value="0" required>
+          </label>
+          <label>Valor alvo (R$)
+            <input name="target" type="number" min=".01" step=".01" required placeholder="5000">
+          </label>
+        </div>
+        <label>Prazo
+          <input name="deadline" type="date">
+        </label>
+        <label>Prioridade
+          <select name="priority">
+            <option>Alta</option>
+            <option selected>Média</option>
+            <option>Baixa</option>
+          </select>
+        </label>
+        <label>Imagem da meta
+          <span class="field-hint">Escolha uma imagem do dispositivo, cole um link direto (termina em .jpg, .png ou
+            .webp) ou use um caminho da pasta do projeto, como img/viagem.jpg.</span>
+          <input name="imageFile" type="file" accept="image/*">
+          <input name="imageUrl" type="text" inputmode="url" autocomplete="off"
+            placeholder="https://.../imagem.jpg  ou  img/viagem.jpg">
+          <span class="field-note hidden" id="goalImageNote">Há uma imagem enviada do dispositivo. Escolha outra para
+            trocá-la.</span>
+        </label>
+        <label class="check-row hidden" id="removeImageRow">
+          <input name="removeImage" type="checkbox"> Remover a imagem atual
+        </label>
+        <button class="apply-btn full-btn" type="submit">Salvar meta ↗</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="contributionModal" role="dialog" aria-modal="true"
+    aria-labelledby="contributionTitle">
+    <div class="modal modal-sm panel">
+      <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      <div class="eyebrow">APORTE</div>
+      <h2 id="contributionTitle">Adicionar aporte</h2>
+      <p id="contributionLead"></p>
+
+      <form id="contributionForm" class="stack-form">
+        <input type="hidden" name="id">
+        <label>Valor do aporte (R$)
+          <input name="amount" type="number" min=".01" step=".01" required placeholder="250">
+        </label>
+        <button class="text-btn" type="button" id="fillRemaining">Preencher o que falta para a meta</button>
+        <button class="apply-btn full-btn" type="submit">Registrar aporte ↗</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="transactionModal" role="dialog" aria-modal="true"
+    aria-labelledby="transactionModalTitle">
+    <div class="modal panel">
+      <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      <div class="eyebrow" id="transactionModalEyebrow">NOVO REGISTRO</div>
+      <h2 id="transactionModalTitle">Nova transação</h2>
+      <p>Registre uma entrada ou saída manualmente.</p>
+
+      <form id="transactionForm" class="stack-form">
+        <input type="hidden" name="id">
+        <label>Descrição
+          <input name="descricao" required maxlength="80" placeholder="Ex.: Mercado do mês">
+        </label>
+        <div class="form-row">
+          <label>Tipo
+            <select name="tipo">
+              <option value="Saída">Saída</option>
+              <option value="Entrada">Entrada</option>
+            </select>
+          </label>
+          <label>Valor (R$)
+            <input name="valor" type="number" min=".01" step=".01" required placeholder="0,00">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Data
+            <input name="data" type="date" required>
+          </label>
+          <label>Status
+            <select name="status" id="transactionStatus"></select>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Categoria
+            <input name="categoria" list="categoryOptions" maxlength="40" placeholder="Ex.: Alimentação">
+          </label>
+          <label>Pagamento
+            <select name="pagamento" id="transactionPayment"></select>
+          </label>
+        </div>
+        <label>Conta / origem
+          <input name="conta" list="accountOptions" maxlength="40" placeholder="Ex.: Nubank">
+        </label>
+        <datalist id="categoryOptions"></datalist>
+        <datalist id="accountOptions"></datalist>
+        <button class="apply-btn full-btn" type="submit">Salvar transação ↗</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="investmentModal" role="dialog" aria-modal="true"
+    aria-labelledby="investmentModalTitle">
+    <div class="modal panel">
+      <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+      <div class="eyebrow" id="investmentModalEyebrow">NOVO ATIVO</div>
+      <h2 id="investmentModalTitle">Novo investimento</h2>
+      <p>Cadastre um ativo para acompanhar a projeção.</p>
+
+      <form id="investmentForm" class="stack-form">
+        <input type="hidden" name="id">
+        <label>Nome do ativo
+          <input name="ativo" required maxlength="60" placeholder="Ex.: CDB Banco X 110% CDI">
+        </label>
+        <div class="form-row">
+          <label>Instituição
+            <input name="instituicao" maxlength="40" placeholder="Ex.: Banco X">
+          </label>
+          <label>Tipo
+            <input name="tipo" maxlength="30" placeholder="CDB, LCI, Tesouro...">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Valor investido (R$)
+            <input name="valor" type="number" min="0" step=".01" required>
+          </label>
+          <label>% do CDI contratado
+            <input name="pct" type="number" min="0.01" step=".01" value="100" required>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>CDI anual (%)
+            <input name="cdi" type="number" min="0.01" step=".01" required>
+          </label>
+          <label>Vencimento
+            <input name="vencimento" type="date">
+          </label>
+        </div>
+        <label>Liquidez
+          <input name="liquidez" maxlength="40" placeholder="Ex.: Diária">
+        </label>
+        <button class="apply-btn full-btn" type="submit">Salvar investimento ↗</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="confirmModal" role="alertdialog" aria-modal="true"
+    aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+    <div class="modal modal-sm panel">
+      <div class="eyebrow">CONFIRMAÇÃO</div>
+      <h2 id="confirmTitle"></h2>
+      <p id="confirmMessage"></p>
+      <div class="modal-actions">
+        <button class="text-btn" type="button" id="confirmCancel">Cancelar</button>
+        <button class="apply-btn apply-btn-danger" type="button" id="confirmOk">Excluir</button>
+      </div>
+    </div>
+  </div>
+  <div class="login hidden" id="loginScreen" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="login-card panel">
+      <div class="brand login-brand">
+        <div class="brand-mark"><span></span><i></i></div>
+        <div><strong>Aureon</strong><small>HOME FINANCE</small></div>
+      </div>
+
+      <div class="avatar avatar-xl login-avatar" id="loginAvatar" aria-hidden="true"></div>
+
+      <div>
+        <div class="eyebrow">BEM-VINDO</div>
+        <h1 id="loginTitle">Como podemos te chamar?</h1>
+      </div>
+      <p class="login-greeting" id="loginGreeting"></p>
+
+      <form id="loginForm" class="stack-form" autocomplete="off">
+        <label>Seu nome
+          <input id="loginName" name="nome" required maxlength="40" autocomplete="given-name" placeholder="Ex.: Maria">
+        </label>
+        <button class="apply-btn full-btn" type="submit">Entrar ↗</button>
+      </form>
+
+      <small class="login-note">Seu nome fica salvo só neste navegador. Não existe conta online nem senha.</small>
+    </div>
+  </div>
+
+  <template id="tpl-empty-state">
+    <div class="empty-state"></div>
+  </template>
+
+  <template id="tpl-empty-row">
+    <tr>
+      <td colspan="8" class="empty-state"></td>
+    </tr>
+  </template>
+
+  <script src="js/core/namespace.js"></script>
+  <script src="js/core/config.js"></script>
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/events.js"></script>
+  <script src="js/core/dom.js"></script>
+  <script src="js/core/persistence.js"></script>
+
+  <script src="js/data/vocabulary.js"></script>
+  <script src="js/data/normalizers.js"></script>
+  <script src="js/data/schema.js"></script>
+  <script src="js/data/excel-io.js"></script>
+  <script src="js/data/backup.js"></script>
+
+  <script src="js/core/store.js"></script>
+  <script src="js/services/filters.js"></script>
+  <script src="js/services/finance.js"></script>
+  <script src="js/services/repository.js"></script>
+  <script src="js/services/data-actions.js"></script>
+  <script src="js/core/router.js"></script>
+
+  <script src="js/components/toast.js"></script>
+  <script src="js/components/modal.js"></script>
+  <script src="js/components/motion.js"></script>
+  <script src="js/components/avatar.js"></script>
+  <script src="js/components/media.js"></script>
+  <script src="js/components/charts.js"></script>
+
+  <script src="js/views/shell.js"></script>
+  <script src="js/views/filterbar.js"></script>
+  <script src="js/views/overview.js"></script>
+  <script src="js/views/transactions.js"></script>
+  <script src="js/views/goals.js"></script>
+  <script src="js/views/investments.js"></script>
+  <script src="js/views/profile.js"></script>
+  <script src="js/views/login.js"></script>
+  <script src="js/views/data-controls.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>

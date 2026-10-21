@@ -1,0 +1,28 @@
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #d9b37a, #315f4d);
+  color: #12231c;
+  font-weight: 800;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background-size: cover;
+  background-position: center;
+  text-decoration: none;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.top-avatar {
+  width: 37px;
+  height: 37px;
+}
+
+.avatar-xl {
+  width: 84px;
+  height: 84px;
+  font-size: 32px;
+  border-width: 3px;
+}

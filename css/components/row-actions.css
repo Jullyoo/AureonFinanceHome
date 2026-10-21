@@ -1,0 +1,29 @@
+.row-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  tbody tr .row-actions,
+  .holding .row-actions,
+  .goal-card .goal-actions {
+    opacity: 0;
+    transition: opacity var(--duration-fast);
+  }
+
+  tbody tr:hover .row-actions,
+  tbody tr:focus-within .row-actions,
+  .holding:hover .row-actions,
+  .holding:focus-within .row-actions,
+  .goal-card:hover .goal-actions,
+  .goal-card:focus-within .goal-actions {
+    opacity: 1;
+  }
+}
+
+.goal-actions .goal-delete {
+  background: rgba(9, 19, 16, 0.7);
+  backdrop-filter: blur(6px);
+}

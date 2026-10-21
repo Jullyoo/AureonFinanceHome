@@ -1,0 +1,11 @@
+# Finais de linha consistentes entre Windows, macOS e Linux
+* text=auto eol=lf
+
+# Binários
+*.xlsx binary
+*.png binary
+*.jpg binary
+
+# Ajuda o GitHub a classificar o código corretamente
+vendor/** linguist-vendored
+index.html linguist-generated

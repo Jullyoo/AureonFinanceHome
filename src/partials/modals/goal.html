@@ -1,0 +1,43 @@
+<div class="modal-backdrop hidden" id="goalModal" role="dialog" aria-modal="true" aria-labelledby="goalModalTitle">
+  <div class="modal panel">
+    <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+    <div class="eyebrow" id="goalModalEyebrow">NOVA CONQUISTA</div>
+    <h2 id="goalModalTitle">Crie uma meta</h2>
+    <p id="goalModalLead">Um objetivo claro deixa o caminho mais leve.</p>
+
+    <form id="goalForm" class="stack-form">
+      <input type="hidden" name="id">
+      <label>Nome da meta
+        <input name="name" required maxlength="60" placeholder="Ex.: Viagem dos sonhos">
+      </label>
+      <div class="form-row">
+        <label>Valor atual (R$)
+          <input name="current" type="number" min="0" step=".01" value="0" required>
+        </label>
+        <label>Valor alvo (R$)
+          <input name="target" type="number" min=".01" step=".01" required placeholder="5000">
+        </label>
+      </div>
+      <label>Prazo
+        <input name="deadline" type="date">
+      </label>
+      <label>Prioridade
+        <select name="priority">
+          <option>Alta</option>
+          <option selected>Média</option>
+          <option>Baixa</option>
+        </select>
+      </label>
+      <label>Imagem da meta
+        <span class="field-hint">Escolha uma imagem do dispositivo, cole um link direto (termina em .jpg, .png ou .webp) ou use um caminho da pasta do projeto, como img/viagem.jpg.</span>
+        <input name="imageFile" type="file" accept="image/*">
+        <input name="imageUrl" type="text" inputmode="url" autocomplete="off" placeholder="https://.../imagem.jpg  ou  img/viagem.jpg">
+        <span class="field-note hidden" id="goalImageNote">Há uma imagem enviada do dispositivo. Escolha outra para trocá-la.</span>
+      </label>
+      <label class="check-row hidden" id="removeImageRow">
+        <input name="removeImage" type="checkbox"> Remover a imagem atual
+      </label>
+      <button class="apply-btn full-btn" type="submit">Salvar meta ↗</button>
+    </form>
+  </div>
+</div>

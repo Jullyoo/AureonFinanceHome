@@ -1,0 +1,53 @@
+<section class="view" id="view-goals">
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">PLANOS &amp; CONQUISTAS</div>
+      <h2>Metas com propósito</h2>
+      <p class="subhead">Transforme vontade em um plano que cabe na sua realidade.</p>
+    </div>
+    <button class="apply-btn" id="addGoalBtn" type="button">＋ Nova meta</button>
+  </div>
+
+  <div id="goalsSummary" class="goal-summary"></div>
+  <div id="goalsGrid" class="goals-grid"></div>
+
+  <template id="tpl-goal-summary">
+    <article class="panel">
+      <span data-slot="label"></span>
+      <strong data-slot="value" data-money></strong>
+    </article>
+  </template>
+
+  <template id="tpl-goal-card">
+    <article class="panel goal-card">
+      <div class="goal-art" data-slot="art">
+        <img data-slot="image" alt="" loading="lazy" referrerpolicy="no-referrer">
+        <span class="emoji" data-slot="emoji"></span>
+      </div>
+
+      <div class="goal-top">
+        <span class="goal-priority" data-slot="priority"></span>
+        <div class="goal-actions">
+          <button class="goal-delete" type="button" data-action="edit" title="Editar meta" aria-label="Editar meta">✎</button>
+          <button class="goal-delete" type="button" data-action="delete" title="Excluir meta" aria-label="Excluir meta">×</button>
+        </div>
+      </div>
+
+      <h3 data-slot="name"></h3>
+      <div class="target" data-slot="deadline"></div>
+
+      <div class="goal-numbers">
+        <strong data-slot="current" data-money></strong>
+        <span data-slot="target" data-money></span>
+      </div>
+      <div class="goal-line"><span data-slot="bar"></span></div>
+      <div class="goal-bottom">
+        <span data-slot="percent"></span>
+        <strong data-slot="remaining" data-money></strong>
+      </div>
+      <div class="goal-bottom-actions">
+        <button class="text-btn" type="button" data-action="contribute">＋ Adicionar aporte</button>
+      </div>
+    </article>
+  </template>
+</section>

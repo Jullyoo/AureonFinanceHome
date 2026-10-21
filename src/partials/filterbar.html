@@ -1,0 +1,18 @@
+<section class="filterbar" aria-label="Filtro de período">
+  <div class="filter-title"><span class="filter-icon" aria-hidden="true">☷</span><b>Explorar período</b></div>
+
+  <div class="filters">
+    <label>Visão
+      <select id="periodMode">
+        <option value="month">Mês</option>
+        <option value="year">Ano</option>
+        <option value="all">Todo período</option>
+        <option value="custom">Data específica</option>
+      </select>
+    </label>
+    <label id="monthWrap">Mês<input id="monthFilter" type="month"></label>
+    <label id="yearWrap" class="hidden">Ano<select id="yearFilter"></select></label>
+    <label id="dateWrap" class="hidden">Dia<input id="dateFilter" type="date"></label>
+    <button class="apply-btn" id="applyFilters" type="button">Aplicar filtros <span aria-hidden="true">↗</span></button>
+  </div>
+</section>

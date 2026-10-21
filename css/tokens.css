@@ -1,0 +1,82 @@
+:root {
+  --bg: #091310;
+  --bg2: #0d1c18;
+  --panel: rgba(18, 37, 31, 0.82);
+  --panel2: #132720;
+  --line: rgba(194, 220, 199, 0.1);
+  --text: #f2f4ec;
+  --muted: #8da49a;
+
+  --green: #9ce5a5;
+  --green-focus: #8dcf9b;
+  --green-deep: #244d3e;
+  --lime: #c7f36a;
+  --gold: #f0bd75;
+  --gold-soft: #f1c18b;
+  --red: #ff8c7c;
+
+  --green-soft: #9ce5a51a;
+  --green-faint: #9ce5a510;
+  --green-border: #9ce5a533;
+  --gold-faint: #f0bd7512;
+  --red-soft: #ff8c7c1f;
+  --surface-subtle: #ffffff08;
+  --surface-chip: #ffffff12;
+  --surface-input: #0c1b16;
+  --surface-sidebar: rgba(8, 19, 15, 0.58);
+  --surface-filterbar: rgba(18, 37, 31, 0.68);
+  --backdrop: #030906bb;
+
+  --gradient-accent: linear-gradient(120deg, #c5f09b, #83c99c);
+  --gradient-panel: linear-gradient(145deg, rgba(23, 46, 38, 0.91), rgba(13, 29, 24, 0.94));
+  --gradient-progress: linear-gradient(90deg, #9ce5a5, #d3f58d);
+  --gradient-goal: linear-gradient(90deg, #67b88a, #d1ef9b);
+
+  --font-body: 'DM Sans', sans-serif;
+  --font-display: 'Manrope', sans-serif;
+
+  --radius-xs: 8px;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 30px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 28px;
+
+  --shadow: 0 18px 55px rgba(0, 0, 0, 0.24);
+  --shadow-lift: 0 22px 60px rgba(0, 0, 0, 0.35);
+  --glow-green: 0 0 28px rgba(156, 229, 165, 0.12);
+  --glow-gold: 0 0 32px rgba(240, 189, 117, 0.08);
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-fast: 0.2s;
+  --duration-base: 0.3s;
+
+  --z-sidebar: 5;
+  --z-modal: 20;
+  --z-toast: 30;
+  --z-login: 40;
+
+  --chart-1: #9ce5a5;
+  --chart-2: #f0bd75;
+  --chart-3: #81c8bd;
+  --chart-4: #a5a6ff;
+  --chart-5: #e7a3c6;
+  --chart-6: #a4d8f5;
+  --chart-7: #d4ee83;
+  --chart-8: #d6b28a;
+  --chart-9: #a8b8c9;
+  --chart-tick: #7f9b8d;
+  --chart-grid: #ffffff0b;
+  --chart-tooltip-bg: #10231c;
+  --chart-tooltip-border: #355344;
+  --chart-tooltip-body: #d5e6d8;
+  --chart-donut-border: #14271f;
+  --chart-fill-in: #9ce5a51c;
+  --chart-fill-out: #f0bd7510;
+}

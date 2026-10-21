@@ -1,0 +1,62 @@
+<section class="view" id="view-investments">
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">PATRIMÔNIO</div>
+      <h2>Investimentos</h2>
+      <p class="subhead">Acompanhe o que você constrói hoje e projete possibilidades.</p>
+    </div>
+    <div class="section-heading-actions">
+      <span class="pill pill-green">Estimativas ilustrativas</span>
+      <button class="apply-btn" id="addInvestmentBtn" type="button">＋ Novo investimento</button>
+    </div>
+  </div>
+
+  <div class="investment-kpis">
+    <article class="panel investment-total">
+      <span>Total investido</span>
+      <strong id="investedTotal" data-money>R$ 0,00</strong>
+      <small>Patrimônio cadastrado</small>
+    </article>
+    <article class="panel">
+      <span>Rendimento anual projetado</span>
+      <strong id="annualYield" data-money>R$ 0,00</strong>
+      <small>Estimativa bruta simplificada</small>
+    </article>
+    <article class="panel">
+      <span>Valor em 12 meses</span>
+      <strong id="futureTotal" data-money>R$ 0,00</strong>
+      <small>Sem aportes adicionais</small>
+    </article>
+  </div>
+
+  <div class="investment-layout">
+    <article class="panel chart-panel">
+      <div class="panel-heading">
+        <div><h3>Projeção de crescimento</h3><p>Simulação composta por ativo</p></div>
+      </div>
+      <div class="chart-area investment-chart"><canvas id="investmentChart" aria-label="Projeção de crescimento dos investimentos"></canvas></div>
+      <p class="disclaimer">Projeção ilustrativa: usa a taxa CDI informada em cada investimento e a porcentagem contratada do CDI. Não considera IR, IOF, taxas, marcação a mercado ou mudanças futuras da taxa.</p>
+    </article>
+
+    <article class="panel holdings-panel">
+      <div class="panel-heading">
+        <div><h3>Carteira cadastrada</h3><p>Seus investimentos atuais</p></div>
+      </div>
+      <div id="holdingsList"></div>
+    </article>
+  </div>
+
+  <template id="tpl-holding">
+    <div class="holding">
+      <div class="holding-icon" aria-hidden="true">↗</div>
+      <div><b data-slot="name"></b><small data-slot="meta"></small></div>
+      <div class="holding-values">
+        <strong data-slot="value" data-money></strong>
+        <div class="row-actions">
+          <button class="row-btn" type="button" data-action="edit" title="Editar" aria-label="Editar investimento">✎</button>
+          <button class="row-btn row-btn-danger" type="button" data-action="delete" title="Excluir" aria-label="Excluir investimento">×</button>
+        </div>
+      </div>
+    </div>
+  </template>
+</section>

@@ -1,0 +1,48 @@
+<div class="modal-backdrop hidden" id="transactionModal" role="dialog" aria-modal="true" aria-labelledby="transactionModalTitle">
+  <div class="modal panel">
+    <button class="modal-close" type="button" data-close-modal aria-label="Fechar">×</button>
+    <div class="eyebrow" id="transactionModalEyebrow">NOVO REGISTRO</div>
+    <h2 id="transactionModalTitle">Nova transação</h2>
+    <p>Registre uma entrada ou saída manualmente.</p>
+
+    <form id="transactionForm" class="stack-form">
+      <input type="hidden" name="id">
+      <label>Descrição
+        <input name="descricao" required maxlength="80" placeholder="Ex.: Mercado do mês">
+      </label>
+      <div class="form-row">
+        <label>Tipo
+          <select name="tipo">
+            <option value="Saída">Saída</option>
+            <option value="Entrada">Entrada</option>
+          </select>
+        </label>
+        <label>Valor (R$)
+          <input name="valor" type="number" min=".01" step=".01" required placeholder="0,00">
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Data
+          <input name="data" type="date" required>
+        </label>
+        <label>Status
+          <select name="status" id="transactionStatus"></select>
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Categoria
+          <input name="categoria" list="categoryOptions" maxlength="40" placeholder="Ex.: Alimentação">
+        </label>
+        <label>Pagamento
+          <select name="pagamento" id="transactionPayment"></select>
+        </label>
+      </div>
+      <label>Conta / origem
+        <input name="conta" list="accountOptions" maxlength="40" placeholder="Ex.: Nubank">
+      </label>
+      <datalist id="categoryOptions"></datalist>
+      <datalist id="accountOptions"></datalist>
+      <button class="apply-btn full-btn" type="submit">Salvar transação ↗</button>
+    </form>
+  </div>
+</div>

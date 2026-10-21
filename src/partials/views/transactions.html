@@ -1,0 +1,62 @@
+<section class="view" id="view-transactions">
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">MOVIMENTAÇÃO</div>
+      <h2>Transações</h2>
+      <p class="subhead">Tudo o que entrou e saiu, em um só lugar.</p>
+    </div>
+
+    <div class="table-heading-actions">
+      <div class="table-actions">
+        <input id="transactionSearch" type="search" placeholder="⌕  Buscar movimentação..." aria-label="Buscar movimentação">
+        <select id="typeFilter" aria-label="Filtrar por tipo">
+          <option value="all">Todos os tipos</option>
+          <option value="Entrada">Entradas</option>
+          <option value="Saída">Saídas</option>
+        </select>
+      </div>
+      <button class="apply-btn" id="addTransactionBtn" type="button">＋ Nova transação</button>
+    </div>
+  </div>
+
+  <article class="panel table-panel">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th data-sort="descricao"><button class="th-sort" type="button">Descrição</button></th>
+            <th data-sort="categoria"><button class="th-sort" type="button">Categoria</button></th>
+            <th data-sort="data"><button class="th-sort" type="button">Data</button></th>
+            <th data-sort="conta"><button class="th-sort" type="button">Conta / origem</button></th>
+            <th data-sort="pagamento"><button class="th-sort" type="button">Pagamento</button></th>
+            <th data-sort="status"><button class="th-sort" type="button">Status</button></th>
+            <th class="right" data-sort="valor"><button class="th-sort" type="button">Valor</button></th>
+            <th class="right"><span class="sr-only">Ações</span></th>
+          </tr>
+        </thead>
+        <tbody id="transactionsBody"></tbody>
+      </table>
+    </div>
+    <div id="tableFooter" class="table-footer"></div>
+  </article>
+
+  <p class="helper-note">Dica: mantenha a estrutura das colunas da planilha modelo para importar os dados sem ajustes.</p>
+
+  <template id="tpl-tx-row">
+    <tr>
+      <td><b data-slot="description"></b></td>
+      <td data-slot="category"></td>
+      <td data-slot="date"></td>
+      <td data-slot="account"></td>
+      <td data-slot="payment"></td>
+      <td><span class="status" data-slot="status"></span></td>
+      <td class="right tx-amount" data-slot="value" data-money></td>
+      <td class="right">
+        <div class="row-actions">
+          <button class="row-btn" type="button" data-action="edit" title="Editar" aria-label="Editar transação">✎</button>
+          <button class="row-btn row-btn-danger" type="button" data-action="delete" title="Excluir" aria-label="Excluir transação">×</button>
+        </div>
+      </td>
+    </tr>
+  </template>
+</section>

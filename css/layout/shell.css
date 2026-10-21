@@ -1,0 +1,144 @@
+.app-shell {
+  display: flex;
+  max-width: 1800px;
+  margin: auto;
+  min-height: 100vh;
+}
+
+.main {
+  padding: 28px 34px 20px;
+  min-width: 0;
+  flex: 1;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.eyebrow {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+.topbar h1 {
+  font: 700 clamp(24px, 2.5vw, 34px) var(--font-display);
+  letter-spacing: -1.3px;
+  margin: 0;
+}
+
+.wave {
+  color: var(--gold);
+  font-size: 22px;
+}
+
+.subhead {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.view {
+  display: none;
+  animation: fade 0.3s ease;
+}
+
+.view.active {
+  display: block;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.3;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 31px 0 16px;
+}
+
+.section-heading h2 {
+  font: 700 22px var(--font-display);
+  letter-spacing: -0.7px;
+  margin: 0;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: 6px;
+}
+
+.live-label {
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.live-label i {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--green);
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid var(--line);
+  margin-top: 31px;
+  padding: 17px 2px 3px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+footer span:first-child {
+  color: #b4c9b9;
+  font-weight: 700;
+}
+
+footer b {
+  color: var(--green);
+}
+
+.section-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.privacy-on [data-money],
+.privacy-on .chart-area canvas,
+.privacy-on .donut-wrap canvas {
+  filter: blur(7px);
+  user-select: none;
+}
+
+[data-money],
+.chart-area canvas,
+.donut-wrap canvas {
+  transition: filter var(--duration-base);
+}

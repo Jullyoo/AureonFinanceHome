@@ -1,0 +1,112 @@
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.table-actions input {
+  min-width: 190px;
+}
+
+.table-panel {
+  padding: 4px 17px 14px;
+}
+
+.table-scroll {
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+th {
+  text-align: left;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+  padding: 16px 10px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 600;
+}
+
+td {
+  padding: 15px 10px;
+  border-bottom: 1px solid var(--surface-subtle);
+  font-size: 11px;
+  color: #c6d4cb;
+}
+
+tbody tr:hover {
+  background: #ffffff04;
+}
+
+.right {
+  text-align: right;
+}
+
+.status {
+  display: inline-block;
+  font-size: 9px;
+  border-radius: 20px;
+  padding: 5px 8px;
+  background: var(--green-faint);
+  color: var(--green);
+}
+
+.status.pending {
+  background: var(--gold-faint);
+  color: var(--gold);
+}
+
+.table-footer {
+  font-size: 10px;
+  color: var(--muted);
+  padding: 13px 9px 0;
+}
+
+.helper-note {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.tx-amount.in {
+  color: var(--green);
+}
+
+.tx-amount.out {
+  color: var(--gold);
+}
+
+.th-sort {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+
+.th-sort:hover,
+th[aria-sort='ascending'] .th-sort,
+th[aria-sort='descending'] .th-sort {
+  color: var(--green);
+}
+
+th[aria-sort='ascending'] .th-sort::after {
+  content: '↑';
+}
+
+th[aria-sort='descending'] .th-sort::after {
+  content: '↓';
+}
+
+.table-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}

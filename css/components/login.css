@@ -1,0 +1,51 @@
+.login {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-login);
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse at 72% -10%, #1d3b32 0, transparent 38%),
+    radial-gradient(ellipse at 0% 60%, #13251f 0, transparent 32%), var(--bg);
+  animation: backdropIn 0.4s ease;
+}
+
+.login-card {
+  width: min(420px, 100%);
+  padding: 34px 30px 28px;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  text-align: center;
+  animation: popIn 0.5s var(--ease-out);
+}
+
+.login-brand {
+  justify-content: center;
+}
+
+.login-card h1 {
+  margin: 6px 0 0;
+  font: 800 26px var(--font-display);
+  letter-spacing: -0.8px;
+}
+
+.login-greeting {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.login-card .stack-form {
+  width: 100%;
+  text-align: left;
+}
+
+.login-note {
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--muted);
+}

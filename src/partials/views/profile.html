@@ -1,0 +1,97 @@
+<section class="view" id="view-profile">
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">CONTA &amp; PREFERÊNCIAS</div>
+      <h2>Seu perfil</h2>
+      <p class="subhead">Personalize o painel e cuide dos seus dados.</p>
+    </div>
+  </div>
+
+  <div class="profile-layout">
+    <article class="panel profile-card">
+      <div class="profile-identity">
+        <div class="avatar avatar-xl" id="profileAvatar"></div>
+        <div>
+          <h3 id="profileName"></h3>
+          <p class="subhead">Finanças pessoais · dados salvos neste navegador</p>
+          <div class="profile-photo-actions">
+            <label class="apply-btn apply-btn-ghost" for="profilePhotoInput">Alterar foto</label>
+            <input id="profilePhotoInput" type="file" accept="image/*" hidden>
+            <button class="text-btn text-btn-danger" id="removePhoto" type="button">Remover foto</button>
+            <button class="text-btn" id="logoutBtn" type="button" title="Volta para a tela de boas-vindas. Seus dados continuam salvos.">Sair</button>
+          </div>
+        </div>
+      </div>
+
+      <form id="profileForm" class="stack-form">
+        <label>Como devemos te chamar?
+          <input name="nome" required maxlength="40" autocomplete="given-name">
+        </label>
+        <div class="form-row">
+          <label>Meta de economia (% da renda)
+            <input name="metaEconomia" type="number" min="0" max="100" step="1">
+          </label>
+          <label>Limite mensal de gastos (R$)
+            <input name="limiteGastos" type="number" min="0" step=".01">
+            <span class="field-hint">Deixe 0 para desativar o alerta.</span>
+          </label>
+        </div>
+        <label>CDI anual padrão (%)
+          <input name="cdiPadrao" type="number" min="0.01" step=".01">
+          <span class="field-hint">Vem preenchido em novos investimentos.</span>
+        </label>
+        <button class="apply-btn" type="submit">Salvar perfil</button>
+      </form>
+    </article>
+
+    <div class="profile-side">
+      <article class="panel profile-summary">
+        <div class="panel-heading">
+          <div><h3>Resumo da conta</h3><p id="profileSince">Seus números em um relance</p></div>
+        </div>
+        <div class="profile-stats" id="profileStats"></div>
+        <div class="storage-meter">
+          <div class="storage-meter-head"><span>Armazenamento do navegador</span><span id="storageText"></span></div>
+          <div class="progress-track"><div id="storageBar" class="progress-fill"></div></div>
+        </div>
+      </article>
+
+      <article class="panel profile-data">
+        <div class="panel-heading">
+          <div><h3>Seus dados</h3><p>Tudo fica salvo apenas neste navegador</p></div>
+        </div>
+        <div class="data-list">
+          <div class="data-row">
+            <div><b>Importar planilha Excel</b><small>Lê as abas Transacoes, Metas e Investimentos do mesmo arquivo e substitui os dados atuais.</small></div>
+            <button class="text-btn" type="button" data-data-action="pick-excel">Importar</button>
+          </div>
+          <div class="data-row">
+            <div><b>Planilha modelo</b><small>Baixe o arquivo de exemplo com as três abas e os cabeçalhos aceitos.</small></div>
+            <a class="text-btn" href="assets/Aureon_Home_Finance_Modelo.xlsx" download>Baixar modelo</a>
+          </div>
+          <div class="data-row">
+            <div><b>Exportar para Excel</b><small>Gera uma planilha no mesmo formato do modelo.</small></div>
+            <button class="text-btn" type="button" data-data-action="export-excel">Exportar</button>
+          </div>
+          <div class="data-row">
+            <div><b>Backup completo (.json)</b><small>Inclui perfil e imagens enviadas do computador.</small></div>
+            <button class="text-btn" type="button" data-data-action="export-backup">Baixar backup</button>
+          </div>
+          <div class="data-row">
+            <div><b>Restaurar backup</b><small>Carrega um arquivo .json gerado pelo Aureon.</small></div>
+            <button class="text-btn" type="button" data-data-action="pick-backup">Restaurar</button>
+            <input id="backupFile" type="file" accept=".json,application/json" hidden>
+          </div>
+          <div class="data-row">
+            <div><b>Limpar todos os dados</b><small>Apaga transações, metas e investimentos. O perfil é mantido.</small></div>
+            <button class="text-btn text-btn-danger" type="button" data-data-action="clear-all">Apagar tudo</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <template id="tpl-profile-stat">
+    <div class="profile-stat"><span data-slot="label"></span><strong data-slot="value"></strong></div>
+  </template>
+</section>

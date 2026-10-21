@@ -1,0 +1,94 @@
+.investment-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin: 20px 0;
+}
+
+.investment-kpis .panel {
+  padding: 21px;
+}
+
+.investment-kpis span,
+.investment-kpis small {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.investment-kpis strong {
+  display: block;
+  font: 700 clamp(20px, 2vw, 27px) var(--font-display);
+  margin: 14px 0 8px;
+}
+
+.investment-total {
+  background: linear-gradient(130deg, var(--green-deep), #163329);
+}
+
+.investment-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 14px;
+}
+
+.investment-chart {
+  height: 280px;
+}
+
+.disclaimer {
+  font-size: 9px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 12px 0 0;
+}
+
+.holdings-panel {
+  padding: 20px;
+}
+
+.holding {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.holding:last-child {
+  border: 0;
+}
+
+.holding-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--green-soft);
+  display: grid;
+  place-items: center;
+  color: var(--green);
+}
+
+.holding b {
+  font-size: 11px;
+  display: block;
+}
+
+.holding small {
+  font-size: 9px;
+  color: var(--muted);
+  display: block;
+  margin-top: 4px;
+}
+
+.holding strong {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.holding-values {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+}
